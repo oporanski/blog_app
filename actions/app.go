@@ -56,6 +56,9 @@ func App() *buffalo.App {
 		// Remove to disable this.
 		app.Use(popmw.Transaction(models.DB))
 
+		// Set curent user in context
+		app.Use(SetCurrentUser)
+
 		// Setup and use translations:
 		app.Use(translations())
 
@@ -64,7 +67,27 @@ func App() *buffalo.App {
 		auth := app.Group("/users")
 		auth.GET("/register", UsersRegisterGet)
 		auth.POST("/register", UsersRegisterPost)
+		auth.GET("/login", UsersLoginGet)
+		auth.POST("/login", UsersLoginPost)
+		auth.GET("/logout", UsersLogout)
 		//app.Resource("/users", UsersResource{})
+
+		postGroup := app.Group("/posts")
+		postGroup.GET("/index", PostsIndex)
+		postGroup.GET("/detail/{pid}", PostsDetail)
+		postGroup.GET("/create", AdminRequired(PostsCreateGet))
+		postGroup.POST("/create", AdminRequired(PostsCreatePost))
+		postGroup.GET("/edit/{pid}", AdminRequired(PostsEditGet))
+		postGroup.POST("/edit/{pid}", AdminRequired(PostsEditPost))
+		postGroup.GET("/delete/{pid}", AdminRequired(PostsDelete))
+
+		commentsGroup := app.Group("/comments")
+		//commentsGroup.Use(LoginRequired)
+		commentsGroup.POST("/create/{pid}", CommentsCreatePost)
+		commentsGroup.GET("/edit/{cid}", CommentsEditGet)
+		commentsGroup.POST("/edit/{cid}", CommentsEditPost)
+		commentsGroup.GET("/delete/{cid}", CommentsDelete)
+
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
 	return app

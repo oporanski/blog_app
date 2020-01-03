@@ -16,7 +16,10 @@ require (
 	github.com/gobuffalo/validate v2.0.3+incompatible
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/markbates/grift v1.5.0
+	github.com/markbates/pop v4.12.2+incompatible
+	github.com/markbates/validate v1.0.0
 	github.com/pkg/errors v0.8.1
+	github.com/satori/go.uuid v1.2.0
 	github.com/stretchr/testify v1.4.0
 	github.com/unrolled/secure v0.0.0-20190103195806-76e6d4e9b90c
 	golang.org/x/crypto v0.0.0-20191122220453-ac88ee75c92c

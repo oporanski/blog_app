@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-    <title>OPO Blog App</title>
+    <title>Blog App</title>
     <%= stylesheetTag("application.css") %>
     <meta name="csrf-param" content="authenticity_token" />
     <meta name="csrf-token" content="<%= authenticity_token %>" />
@@ -21,18 +21,24 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#">Posts</a>
+                <a class="nav-link" href="<%= postsIndexPath() %>">Posts</a>
             </li>
             </ul>
             <ul class="navbar-nav">
+                <%= if (current_user) { %>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Login</a>
+                    <a href="<%= usersLogoutPath() %>" class="nav-link">Logout</a>
+                </li>
+                <% } else { %>
+                <li class="nav-item">
+                    <a href="<%= usersLoginPath() %>" class="nav-link">Login</a>
                 </li>
                 <li class="nav-item">
                     <a href="<%= usersRegisterPath() %>" class="nav-link">Register</a>
                 </li>
-            </ul>
-        </div>
+                <% } %>
+            </ul>        
+         </div>
         </nav> 
         <!-- End NavBar -->       
         <%= partial("flash.html") %>
